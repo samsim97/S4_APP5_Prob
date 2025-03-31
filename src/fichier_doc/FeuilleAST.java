@@ -5,12 +5,19 @@ package fichier_doc; /** @author Ahmed Khoumsi */
 public class FeuilleAST extends ElemAST {
 
   // Attribut(s)
-
+    public String Name;
+    public NoeudAST Parent;
 
 /**Constructeur pour l'initialisation d'attribut(s)
  */
-  public FeuilleAST( ) {  // avec arguments
-    //
+public FeuilleAST(String name) {  // avec arguments
+    this.Name = name;
+    this.Parent = null;
+}
+
+  public FeuilleAST(String name, NoeudAST parent) {  // avec arguments
+    this.Name = name;
+    this.Parent = parent;
   }
 
 

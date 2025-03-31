@@ -1,7 +1,4 @@
-import fichier_doc.AnalLex;
-import fichier_doc.Reader;
-import fichier_doc.Terminal;
-import fichier_doc.Writer;
+import fichier_doc.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -21,7 +18,10 @@ public class Main {
         Terminal t = null;
         while(lexical.resteTerminal()) {
             t = lexical.prochainTerminal();
-            toWrite += t.name + "\n" ;  // toWrite contient le resultat
+            toWrite += t.name; // + "\n" ;  // toWrite contient le resultat
+            if (t.type == TerminalTokenType.INSTRUCTION_END) {
+                toWrite += "\n";
+            }
         }				   //    d'analyse lexicale
         System.out.println(toWrite); 	// Ecriture de toWrite sur la console
         Writer w = new Writer(args[1],toWrite); // Ecriture de toWrite dans fichier args[1]

@@ -46,7 +46,7 @@ public class AnalLex {
 /** Constructeur pour l'initialisation d'attribut(s)
  */
   public AnalLex(String expression) {  // arguments possibles
-    this.expression = expression.replace("\r", "").replace("\n", "");
+    this.expression = expression.replace("\r", "").replace("\n", "").replace(" ", "");
     this.selectedCharIndex = 0;
     this.automateState = AutomateState.INIT;
 
