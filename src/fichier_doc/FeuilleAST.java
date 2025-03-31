@@ -31,7 +31,7 @@ public FeuilleAST(String name) {  // avec arguments
  /** Lecture de chaine de caracteres correspondant a la feuille d'AST
   */
   public String LectAST( ) {
-    return null;
+    return Name;
   }
 
 }

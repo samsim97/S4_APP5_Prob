@@ -15,6 +15,7 @@ public class DescenteRecursive {
   private String fileContent;
   private Stack<ElemAST> nodes;
   private Boolean foundOpeningParenthesis = false;
+  private Boolean lastTokenIsLiteral = false;
 
 /** Constructeur de fichier_doc.DescenteRecursive :
       - recoit en argument le nom du fichier contenant l'expression a analyser
@@ -47,7 +48,7 @@ private ElemAST AnalyzeGrammarE(String instruction) {
 
   if (currentTokenIndex < instruction.length()) {
     if (instruction.charAt(currentTokenIndex) == 'P') { // Plus or minus
-
+      lastTokenIsLiteral = false;
       String leftToken = String.valueOf(instruction.charAt(currentTokenIndex));
       currentTokenIndex++;
       ElemAST rightExpression = AnalyzeGrammarE(instruction);
@@ -55,6 +56,8 @@ private ElemAST AnalyzeGrammarE(String instruction) {
 
     } else if (instruction.charAt(currentTokenIndex) == 'C' && !foundOpeningParenthesis) {
       ErreurSynt("Erreur de syntaxe dans l'instruction. Une parenthèse ouvrante est manquante.");
+    } else if (instruction.charAt(currentTokenIndex) == 'N' && lastTokenIsLiteral) {
+      ErreurSynt("Erreur de syntaxe dans l'instruction. Un litéral ne peut pas être suivi par un autre litéral.");
     }
   }
   return node;
@@ -66,7 +69,7 @@ private ElemAST AnalyzeGrammarT(String instruction) {
 
   if (currentTokenIndex < instruction.length()) {
     if (instruction.charAt(currentTokenIndex) == 'D') { // D = Multiplier or divider
-
+      lastTokenIsLiteral = false;
       String leftToken = String.valueOf(instruction.charAt(currentTokenIndex));
       currentTokenIndex++;
       ElemAST rightExpression = AnalyzeGrammarE(instruction);
@@ -88,6 +91,7 @@ private ElemAST AnalyzeGrammarF(String instruction) {
     if (currentTokenIndex < instruction.length() - 1) {
       currentTokenIndex++;
       foundOpeningParenthesis = true;
+      lastTokenIsLiteral = false;
     }
 
     ElemAST expressionNode = AnalyzeGrammarE(instruction);
@@ -98,6 +102,7 @@ private ElemAST AnalyzeGrammarF(String instruction) {
       if (currentTokenIndex < instruction.length() - 1) {
         currentTokenIndex++;
         foundOpeningParenthesis = false;
+        lastTokenIsLiteral = false;
       }
 
       return expressionNode;
@@ -109,6 +114,7 @@ private ElemAST AnalyzeGrammarF(String instruction) {
   } else if (instruction.charAt(currentTokenIndex) == 'N') { // Operande (Variable ou nombre)
     if (currentTokenIndex < instruction.length() - 1) {
       currentTokenIndex++;
+      lastTokenIsLiteral = true;
     }
 
     return new FeuilleAST("N");
