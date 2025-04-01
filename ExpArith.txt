@@ -1,5 +1,1 @@
-AAAA_TEST_HELLO_Why_I_AM_HERE=A+B;
-C=A+B;
-(U_x + V_y ) * W_z / 35;
-(55 - 47 ) * 14 / 2;
-( U_x - ) * W_z / 35;
+3 + 5)*4;
