@@ -188,13 +188,22 @@ public class AnalLex {
         case RETURN:
           break;
         case ERROR:
-          ErreurLex("Invalid char (" + expression.charAt(selectedCharIndex) + ") at position " + selectedCharIndex);
+          DisplayErrorMessage();
           break;
         case null, default:
           ErreurLex("Invalid state");
           break;
       }
     }
+  }
+
+
+  private void DisplayErrorMessage() {
+    StringBuilder errorMessage = new StringBuilder("Invalid character (" + expression.charAt(selectedCharIndex) + ") at position " + selectedCharIndex + "\n");
+    errorMessage.append(expression).append("\n");
+    errorMessage.append(" ".repeat(selectedCharIndex));
+    errorMessage.append("^");
+    ErreurLex(errorMessage.toString());
   }
 
  
