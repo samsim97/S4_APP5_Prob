@@ -217,7 +217,8 @@ public void ErreurSynt(String s) {
 
     DescenteRecursive dr = new DescenteRecursive(lexicalExpression, r.toString());
     try {
-      dr.AnalSynt();
+      ElemAST RacineAST = dr.AnalSynt().getFirst();
+      System.out.println("AST completed.");
       //ElemAST RacineAST = dr.AnalSynt().getFirst();
       //toWriteLect += "Lecture de l'AST trouve : " + RacineAST.LectAST() + "\n";
       //System.out.println(toWriteLect);

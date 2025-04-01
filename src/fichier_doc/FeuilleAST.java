@@ -6,18 +6,18 @@ public class FeuilleAST extends ElemAST {
 
   // Attribut(s)
     public String Name;
-    public NoeudAST Parent;
+    //public NoeudAST Parent;
 
 /**Constructeur pour l'initialisation d'attribut(s)
  */
 public FeuilleAST(String name) {  // avec arguments
     this.Name = name;
-    this.Parent = null;
+    //this.Parent = null;
 }
 
   public FeuilleAST(String name, NoeudAST parent) {  // avec arguments
     this.Name = name;
-    this.Parent = parent;
+    //this.Parent = parent;
   }
 
 
