@@ -55,9 +55,9 @@ private ElemAST AnalyzeGrammarE(String instruction) {
       return new NoeudAST(leftToken, node, rightExpression);
 
     } else if (instruction.charAt(currentTokenIndex) == 'C' && !foundOpeningParenthesis) {
-      ErreurSynt("Erreur de syntaxe dans l'instruction. Une parenthèse ouvrante est manquante.");
+      DisplaySyntaxError("Erreur de syntaxe dans l'instruction. Une parenthèse ouvrante est manquante.", instruction, currentTokenIndex);
     } else if (instruction.charAt(currentTokenIndex) == 'N' && lastTokenIsLiteral) {
-      ErreurSynt("Erreur de syntaxe dans l'instruction. Un litéral ne peut pas être suivi par un autre litéral.");
+      DisplaySyntaxError("Erreur de syntaxe dans l'instruction. Un litéral ne peut pas être suivi par un autre litéral.", instruction, currentTokenIndex);
     }
   }
   return node;
@@ -76,7 +76,7 @@ private ElemAST AnalyzeGrammarT(String instruction) {
       return new NoeudAST(leftToken, node, rightExpression);
 
     } else if (instruction.charAt(currentTokenIndex) == 'C' && !foundOpeningParenthesis) {
-      ErreurSynt("Erreur de syntaxe dans l'instruction. Une parenthèse ouvrante est manquante.");
+      DisplaySyntaxError("Erreur de syntaxe dans l'instruction. Une parenthèse ouvrante est manquante.", instruction, currentTokenIndex);
     }
   }
   return node;
@@ -85,7 +85,7 @@ private ElemAST AnalyzeGrammarT(String instruction) {
 
 private ElemAST AnalyzeGrammarF(String instruction) {
   if (currentTokenIndex >= instruction.length()) {
-    ErreurSynt("Erreur de syntaxe dans l'instruction. Une opérande ou une parenthèse est manquante.");
+    DisplaySyntaxError("Erreur de syntaxe dans l'instruction. Une opérande ou une parenthèse est manquante.", instruction, currentTokenIndex);
   }
   if (instruction.charAt(currentTokenIndex) == 'O') { // Opening parenthesis
     if (currentTokenIndex < instruction.length() - 1) {
@@ -96,7 +96,7 @@ private ElemAST AnalyzeGrammarF(String instruction) {
 
     ElemAST expressionNode = AnalyzeGrammarE(instruction);
     if (currentTokenIndex >= instruction.length()) {
-      ErreurSynt("Erreur de syntaxe dans l'instruction. Une parenthèse fermante est manquante.");
+      DisplaySyntaxError("Erreur de syntaxe dans l'instruction. Une parenthèse fermante est manquante.", instruction, currentTokenIndex);
     }
     if (instruction.charAt(currentTokenIndex) == 'C') { // Closing parenthesis
       if (currentTokenIndex < instruction.length() - 1) {
@@ -107,10 +107,10 @@ private ElemAST AnalyzeGrammarF(String instruction) {
 
       return expressionNode;
     } else {
-      ErreurSynt("Erreur de syntaxe dans l'instruction. Une parenthèse fermante est manquante.");
+      DisplaySyntaxError("Erreur de syntaxe dans l'instruction. Une parenthèse fermante est manquante.", instruction, currentTokenIndex);
     }
   } else if (instruction.charAt(currentTokenIndex) == 'C') {
-    ErreurSynt("Erreur de syntaxe dans l'instruction. Une parenthèse ouvrante est manquante.");
+    DisplaySyntaxError("Erreur de syntaxe dans l'instruction. Une parenthèse ouvrante est manquante.", instruction, currentTokenIndex);
   } else if (instruction.charAt(currentTokenIndex) == 'N') { // Operande (Variable ou nombre)
     if (currentTokenIndex < instruction.length() - 1) {
       currentTokenIndex++;
@@ -120,6 +120,16 @@ private ElemAST AnalyzeGrammarF(String instruction) {
     return new FeuilleAST("N");
   }
   return null;
+}
+
+
+private void DisplaySyntaxError(String msg, String instruction, int lastTokenIndex) {
+  StringBuilder message = new StringBuilder(msg + "\n" + instruction + "\n");
+  for (int i = 0; i < lastTokenIndex; i++) {
+    message.append(" ");
+  }
+  message.append("^");
+  ErreurSynt(message.toString());
 }
 
 

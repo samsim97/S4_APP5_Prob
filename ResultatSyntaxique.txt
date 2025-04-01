@@ -1,2 +1,2 @@
-Lecture de l'AST trouve : D
+Lecture de l'AST trouve : P
 Evaluation de l'AST trouve : 0
